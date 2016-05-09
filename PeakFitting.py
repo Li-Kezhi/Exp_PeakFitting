@@ -10,14 +10,19 @@ Parameters needed to modify:
     Peak type, initial estimation
 4. Add-up model
     mod = peak1 + peak2 + bg_mod
+5. Report
+    area1 = simps(comps['p1_'], x)
+6. Plotting
+    plot(x, comps[...])
 """
 
 import numpy as np
 from lmfit.models import VoigtModel, LinearModel
 import sys
 import matplotlib.pyplot as plt
+from scipy.integrate import simps
 
-fileLocation = 'E:\\SkyDrive\\Sharing data\\XRD\\20160424_MnCeBi\\For python\\'
+fileLocation = 'F:\\Download\\Exp---Peak-Fitting-master\\Exp---Peak-Fitting-master\\'
 fileName = 'Mn0-100.txt'
 
 start = 52.0      # Define the fitting range
@@ -66,10 +71,21 @@ out = mod.fit(y, pars, x=x)
 print(out.fit_report(min_correl=0.5))    # Parameter result
 result_txt = open(fileLocation + 'result_' + fileName, 'w')
 result_txt.write(out.fit_report(min_correl=0.5))
+result_txt.write('\n')
+result_txt.write('===================\n')
+comps = out.eval_components(x=x)
+area1 = simps(comps['p1_'], x)           # Integration results
+area2 = simps(comps['p2_'], x)
+result_txt.write('Area1 = ' + str(area1) + ', Area2 = ' + str(area2))
 result_txt.close()
 
 plt.plot(x, out.best_fit, 'r-')    # Graph result
+plt.plot(x, comps['bg_'], 'g-')            # Plot the background and the peaks
+plt.plot(x, comps['p1_'] + comps['bg_'],  'k-')
+plt.plot(x, comps['p2_'] + comps['bg_'],  'k-')
 plt.show()
 
-graphFit = np.transpose(np.vstack((x, out.best_fit)))   # Fitting result
-np.savetxt(fileLocation + 'graph_' + fileName, graphFit, fmt = "%f, %f", newline = '\n')
+graphFit = np.transpose(np.vstack((x, out.best_fit, comps['bg_'], comps['p1_'], comps['p2_'])))   # Fitting result
+np.savetxt(fileLocation + 'graph_' + fileName, graphFit, fmt = "%f, %f, %f, %f, %f", newline = '\n')
+
+
