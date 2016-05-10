@@ -39,6 +39,13 @@ for i in xrange(np.size(x_original)):
     if startLine != None and x_original[i] >= end:
         endLine = i
         break
+if startLine == endLine:
+    starLine = 0
+    endLine = np.size(x_original) - 1
+if startLine == None:
+    startLine = 0
+if endLine == None:
+    endLine = np.size(x_original) - 1
 
 x = x_original[startLine:endLine]
 y = y_original[startLine:endLine]
