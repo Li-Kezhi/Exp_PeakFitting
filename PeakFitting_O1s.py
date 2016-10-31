@@ -22,7 +22,7 @@ import sys
 import matplotlib.pyplot as plt
 from scipy.integrate import simps
 
-fileLocation = 'E:\\temp\\'
+fileLocation = '.\\Examples\\'
 fileName = 'O1s.txt'
 
 start = 1      # Define the fitting range

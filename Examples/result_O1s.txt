@@ -1,0 +1,30 @@
+[[Model]]
+    ((Model(pvoigt, prefix='p1_') + Model(pvoigt, prefix='p2_')) + Model(linear, prefix='bg_'))
+[[Fit Statistics]]
+    # function evals   = 107
+    # data points      = 400
+    # variables        = 7
+    chi-square         = 396199270.551
+    reduced chi-square = 1008140.638
+    Akaike info crit   = 5536.385
+    Bayesian info crit = 5564.326
+[[Variables]]
+    bg_slope:       409 (fixed)
+    bg_intercept:  -210000 (fixed)
+    p1_amplitude:   2.3284e+05 +/- 1.10e+03 (0.47%) (init= 282890)
+    p1_sigma:       0.89758644 +/- 0.003517 (0.39%) (init= 0.5582452)
+    p1_center:      531.676192 +/- 0.002374 (0.00%) (init= 531.6085)
+    p1_fraction:    0.34999153 +/- 0.012736 (3.64%) (init= 0.3)
+    p1_fwhm:        1.79517288 +/- 0.007035 (0.39%)  == '2.0000000*p1_sigma'
+    p2_amplitude:   34874.7485 +/- 547.9424 (1.57%) (init= 80000)
+    p2_sigma:       0.49200760 +/- 0.008293 (1.69%) (init= 0.5)
+    p2_center:      529.716644 +/- 0.006363 (0.00%) (init= 529.8)
+    p2_fraction:    0.34999153 +/- 0.012736 (3.64%)  == 'p1_fraction'
+    p2_fwhm:        0.98401520 +/- 0.016586 (1.69%)  == '2.0000000*p2_sigma'
+[[Correlations]] (unreported correlations are <  0.500)
+    C(p1_amplitude, p1_fraction)  =  0.783 
+    C(p2_amplitude, p2_sigma)    =  0.755 
+    C(p1_amplitude, p2_amplitude)  = -0.502 
+
+===================
+Area1 = -227333.230122, Area2 = -34286.6490838

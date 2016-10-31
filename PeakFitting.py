@@ -22,7 +22,7 @@ import sys
 import matplotlib.pyplot as plt
 from scipy.integrate import simps
 
-fileLocation = 'F:\\Download\\Exp---Peak-Fitting-master\\Exp---Peak-Fitting-master\\'
+fileLocation = '.\\Examples\\'
 fileName = 'Mn0-100.txt'
 
 start = 52.0      # Define the fitting range
