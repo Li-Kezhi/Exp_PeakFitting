@@ -1,13 +1,13 @@
-# Exp---Peak-Fitting
-Using Python LMFIT to fit peaks
+# Exp_SciTools
+Basic tools for data manipulating.
 
-### Procedures
-1. Define file name and position
+## Scripts
+# PeakFitting.py
+Used for fitting multi-peaks in a spectrum.
 
-2. Define spectrum range
+# Integration.py
+Used for integrate peak area for a spectrum.
 
-3. Fit background
-
-4. Define peaks information and make initial estimation
-
-5. Fit peaks
+## Dependencies
+- lmfit package
+- numpy, scipy, matplotlib packages

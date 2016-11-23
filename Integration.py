@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-Semi-auto fitting program
+Semi-auto integration program
 
 Steps:
 1. File name and position
@@ -12,47 +12,47 @@ Steps:
     Select background model and fit the data
     Cancel exit() at the end of Background-part
     Set bg_ parameters
-3. Peaks information and initial guess
-    Peak type, initial estimation
-    Cancel exit() and plotting codes after estimation-part
-4. Fitting
-    Modify fitting parameters
-    Cancel last exit()
-    Do remember to change report/plotting format parameters
-5. Plotting and reports
+3. Integrating and reports
 """
 
 __author__ = "LI Kezhi" 
 __date__ = "$2016-11-23$"
-__version__ = "1.2.1"
+__version__ = "1.0"
 
 import numpy as np
+from scipy import integrate
 from lmfit.models import VoigtModel, LinearModel, PolynomialModel
 import matplotlib.pyplot as plt
 from scipy.integrate import simps
 
-fileLocation = './Examples/PeakFitting/'
-fileName = 'Mn0-100.txt'
+fileLocation = './Examples/Integration/'
+fileName = 'A-MN10.csv'
 
-start = 52.0      # Define the fitting range
-end = 64.0
+start = 50      # Define the fitting range
+end = 300
 
 # Background setting
 BG_FITTING_MODE = 'z'   # 't' for two-point method;
                         # 'z' for two-zone method
 # Two-point method:
-head0 = 53   # Head x point
+head0 = 53   # Head x point; integration range
 end0 = 63
 # Two-zone method:
-head1 = 52.1   # Head x range: head1 < x < head2
-head2 = 54
-end1 = 61
-end2 = 63.9
+head1 = 50   # Head x range: head1 < x < head2
+             # Integration range: head2 < x < end1
+head2 = 55
+end1 = 250
+end2 = 300
+
+# Integration setting
+INT_METHOD = 't'   # 't' for trapozoid integration
+                   # 's' for Simpson's integration
+
 
 ###########################
 
 ##### Read data #####
-dat = np.loadtxt(fileLocation + fileName)
+dat = np.loadtxt(fileLocation + fileName, delimiter = ',')
 x_original = dat[:, 0]
 y_original = dat[:, 1]
 
@@ -87,7 +87,7 @@ if BG_FITTING_MODE == 't':
     for i in xrange(np.size(x_original)):
         if x_original[i] >= head0 and startLine == None:
             startLine = i
-        if startLine != None and endLine == None and x_original[i] >= end:
+        if startLine != None and x_original[i] >= end:
             endLine = i
     x_bg = [x_original[startLine], x_original[endLine]]
     y_bg = [y_original[startLine], y_original[endLine]]
@@ -108,7 +108,7 @@ elif BG_FITTING_MODE == 'z':
     y_bg = np.hstack((y_original[startLine1:startLine2],
                                 y_original[endLine1:endLine2]))
 
-bg_mod = PolynomialModel(2, prefix='bg_')   # Background
+bg_mod = PolynomialModel(1, prefix='bg_')   # Background
 pars = bg_mod.guess(y_bg, x=x_bg)
 
 mod = bg_mod     
@@ -120,64 +120,60 @@ out = mod.fit(y_bg, pars, x=x_bg)
 
 print(out.fit_report(min_correl=0.5))    # Parameter result
 
-plt.plot(x_bg, out.best_fit, 'r-')    # Background plotting
+plt.plot(x_bg, out.eval(), 'r-')    # Background plotting
 plt.xlim([x[0], x[-1]])
 plt.show()
 
 # exit()   # Stop here?
-pars['bg_c0'].set(-941.6)   # Set parameters after fitting bg
-pars['bg_c1'].set(34.81)
-pars['bg_c2'].set(-0.3106)
-
-##### Peak Fitting #####
-peak1  = VoigtModel(prefix='p1_')    # Peak information
-pars.update(peak1.make_params())
-
-pars['p1_center'].set(56, min=54, max=58)
-pars['p1_amplitude'].set(2000, min=0)
-
-peak2  = VoigtModel(prefix='p2_')
-pars.update(peak2.make_params())
-
-pars['p2_center'].set(59, min=57, max=61)
-pars['p2_amplitude'].set(2000, min=0)
-
-mod = peak1 + peak2 + bg_mod      # Add-up
 
 
-init = mod.eval(pars, x=x)
+##### Integration #####
+if BG_FITTING_MODE == 't':
+    startInt = head0   # Integration range
+    endInt = end0
+elif BG_FITTING_MODE == 'z':
+    startInt = head2
+    endInt = end1
+
+# Background subtraction
+comp = out.eval_components(x=x)   
+out_param = out.params
+y_bg_fit = bg_mod.eval(params = out_param, x = x)
+y_bg_remove = y - y_bg_fit
+
+startLine, endLine = None, None
+for i in xrange(np.size(x)):
+    if x[i] >= startInt and startLine == None:
+        startLine = i
+    if startLine != None and endLine == None and x[i] >= endInt:
+        endLine = i
+x_int = x_original[startLine:endLine]
+y_int = y_bg_remove[startLine:endLine]
+y_bg_fit_ = y_bg_fit[startLine:endLine]
+y_orig = y_original[startLine:endLine]
+
+
+if INT_METHOD == 't':
+    integration = np.trapz(y_int, x_int)
+elif INT_METHOD == 's':
+    integration = integrate.simps(y_int, x_int)
+print ('Integration: ' + str(integration))
+
+# Plotting
 plt.plot(x, y, 'b.')
-# plt.plot(x, init, 'k--')   # Initial guess plotting
-# plt.show()   # Initial guess plotting
-# exit()   # Stop here?
-
-out = mod.fit(y, pars, x=x)
-
-print(out.fit_report(min_correl=0.5))    # Parameter result
-
-plt.plot(x, out.best_fit, 'r-')    # Graph result
-comps = out.eval_components(x=x)
-plt.plot(x, comps['bg_'], 'g-')            # Plot the background and the peaks
-plt.plot(x, comps['p1_'] + comps['bg_'],  'k-')
-plt.plot(x, comps['p2_'] + comps['bg_'],  'k-')
+plt.plot(x_bg, out.best_fit, 'r-')    # Background plotting
+plt.xlim([x[0], x[-1]])
+plt.fill_between(x_int, y_orig, y_bg_fit_, facecolor='green')
 plt.show()
-
-# exit()   # Stop here?
 
 
 ##### Text output #####
 
-result_txt = open(fileLocation + 'result_' + fileName, 'w')
+result_txt = open(fileLocation + 'integration_' + fileName + '.txt', 'w')
 result_txt.write(out.fit_report(min_correl=0.5))
 result_txt.write('\n')
 result_txt.write('===================\n')
-comps = out.eval_components(x=x)
-area1 = simps(comps['p1_'], x)           # Integration results
-area2 = simps(comps['p2_'], x)
-result_txt.write('Area1 = ' + str(area1) + ', Area2 = ' + str(area2))
+result_txt.write('Integration area = ' + str(integration))
+result_txt.write('Start from: ' + str(startInt))
+result_txt.write('End by: ' + str(endInt))
 result_txt.close()
-
-graphFit = np.transpose(np.vstack((x, out.best_fit, comps['bg_'], comps['p1_'], comps['p2_'])))   # Fitting result
-np.savetxt(fileLocation + 'graph_' + fileName, graphFit, fmt = "%f, %f, %f, %f, %f", newline = '\n')
-
-

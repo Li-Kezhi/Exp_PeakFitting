@@ -1,0 +1,18 @@
+[[Model]]
+    Model(polynomial, prefix='bg_')
+[[Fit Statistics]]
+    # function evals   = 5
+    # data points      = 71
+    # variables        = 2
+    chi-square         = 0.000
+    reduced chi-square = 0.000
+    Akaike info crit   = -1297.407
+    Bayesian info crit = -1292.881
+[[Variables]]
+    bg_c0:   0.33887263 +/- 3.60e-05 (0.01%) (init= 0.3388726)
+    bg_c1:   6.4172e-06 +/- 1.44e-07 (2.24%) (init= 6.417226e-06)
+[[Correlations]] (unreported correlations are <  0.500)
+    C(bg_c0, bg_c1)              = -0.937 
+
+===================
+Integration area = 0.758721678351Start from: 55End by: 250
