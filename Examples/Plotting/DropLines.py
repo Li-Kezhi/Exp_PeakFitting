@@ -19,9 +19,9 @@ import mpltex
 ##### Preparation #####
 # File names
 name = []
-name.append('./Examples/Plotting/DropLines/PDF#41-1379_MnOOH.txt')
-name.append('./Examples/Plotting/DropLines/PDF#24-0734_Mn3O4.txt')
-name.append('./Examples/Plotting/DropLines/PDF#44-1472_MnCO3.txt')
+name.append('./DropLines/PDF#41-1379_MnOOH.txt')
+name.append('./DropLines/PDF#24-0734_Mn3O4.txt')
+name.append('./DropLines/PDF#44-1472_MnCO3.txt')
 # Label names
 labels = []
 labels.append(r'MnOOH #24-0734')
