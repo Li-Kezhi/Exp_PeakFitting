@@ -17,7 +17,7 @@ Steps:
 
 __author__ = "LI Kezhi" 
 __date__ = "$2017-01-24$"
-__version__ = "1.3.0"
+__version__ = "1.3.1"
 
 import numpy as np
 from lmfit.models import VoigtModel, PolynomialModel
@@ -77,29 +77,72 @@ STATUS = controlStatas[4]  # Choose the current program status
 
 ###########################
 
+##### Pre-fuctions #####
+def dataSelect(data, start, end):
+    '''
+    Return selected data in a given range
+    data: two-row np.array
+    start/end:
+        floats: return x and y if start < x < end
+        list of floats: return x and y if start[i] < x < end[i]
+        Make sure that start < end, and start[i] < start[i+1], same for end
+    return: tuple of (x, y)
+    '''
+    if data[0, 0] > data[-1, 0]:
+        dataCopy = np.flipud(data)
+    x, y = data[:, 0], data[:, 1]
+    
+    if type(start) == float or type(start) == int:
+        assert start < end, 'start should be less than end'
+        startLine, endLine = None, None
+        for i in xrange(np.size(x)):
+            if startLine == None and x[i] >= start:
+                startLine = i
+            if startLine != None and endLine == None and x[i] >= end:
+                endLine = i
+                break
+        if startLine == None:
+            startLine = 0
+        if endLine == None:
+            endLine = np.size(x_original) - 1
+        xSelect = x[startLine:endLine]
+        ySelect = y[startLine:endLine]
+    else:
+        assert start[0] < end[0], 'start should be less than end'
+        assert start[0] < start[1], 'start should be in a increasing trend'
+        assert end[0] < end[1], 'start should be in a increasing trend'
+        assert end[0] < start[1], 'end[0] should be less than start[1]'
+        assert len(x) == len(y), 'start should have same numbers of values as end'
+        pairs = []
+        for i, item in enumerate(start):
+            pairs.append((start[i], end[i]))
+        
+        xSelect, ySelect = np.array([]), np.array([])
+        for pair in pairs:
+            startLine, endLine = None, None
+            for i in xrange(np.size(x)):
+                if startLine == None and x[i] >= pair[0]:
+                    startLine = i
+                if startLine != None and endLine == None and x[i] >= pair[1]:
+                    endLine = i
+                    break
+            if startLine == None:
+                startLine = 0
+            if endLine == None:
+                endLine = np.size(x_original) - 1
+            xSelect = np.hstack((xSelect, x[startLine:endLine])) 
+            ySelect = np.hstack((ySelect, y[startLine:endLine])) 
+            x = x[endLine:]
+            y = y[endLine:]
+
+    return (xSelect, ySelect)
+
 ##### Read data #####
 dat = np.loadtxt(FILE_LOCATION + FILE_NAME)
 x_original = dat[:, 0]
 y_original = dat[:, 1]
 
-startLine, endLine = None, None
-for i in xrange(np.size(x_original)):
-    if x_original[i] >= PLOT_HEAD and startLine == None:
-        startLine = i
-    if startLine != None and endLine == None and x_original[i] >= PLOT_END:
-        endLine = i
-        break
-if startLine == endLine:
-    starLine = 0
-    endLine = np.size(x_original) - 1
-if startLine == None:
-    startLine = 0
-if endLine == None:
-    endLine = np.size(x_original) - 1
-
-x = x_original[startLine:endLine]
-y = y_original[startLine:endLine]
-
+x, y = dataSelect(dat, PLOT_HEAD, PLOT_END)
 
 ##### Original Data #####
 if STATUS == 'Initial glimpse':
@@ -109,30 +152,13 @@ if STATUS == 'Initial glimpse':
 
 ##### Background #####
 if BG_FITTING_MODE == 't':
-    startLine, endLine = None, None
-    for i in xrange(np.size(x_original)):
-        if x_original[i] >= BG_HEAD_TPM and startLine == None:
-            startLine = i
-        if startLine != None and endLine == None and x_original[i] >= PLOT_END:
-            endLine = i
-    x_bg = [x_original[startLine], x_original[endLine]]
-    y_bg = [y_original[startLine], y_original[endLine]]
+    x_bg, y_bg = dataSelect(dat, BG_HEAD_TPM, BG_END_TPM)
+    x_bg = [x_bg[0], x_bg[-1]]  # Only leave two points
+    y_bg = [y_bg[0], y_bg[-1]]
 elif BG_FITTING_MODE == 'z':
-    startLine1, startLine2 = None, None
-    endLine1, endLine2 = None, None
-    for i in xrange(np.size(x_original)):
-        if x_original[i] >= BG_HEAD_LEFT_TZM and startLine1 == None:
-            startLine1 = i
-        if startLine1 != None and startLine2 == None and x_original[i] >= BG_HEAD_RIGHT_TZM:
-            startLine2 = i
-        if x_original[i] >= BG_END_LEFT_TZM and endLine1 == None:
-            endLine1 = i
-        if endLine1 != None and endLine2 == None and x_original[i] >= BG_END_RIGHT_TZM:
-            endLine2 = i
-    x_bg = np.hstack((x_original[startLine1:startLine2], 
-                                x_original[endLine1:endLine2]))
-    y_bg = np.hstack((y_original[startLine1:startLine2],
-                                y_original[endLine1:endLine2]))
+    bg_head = (BG_HEAD_LEFT_TZM, BG_END_LEFT_TZM)
+    bg_end = (BG_HEAD_RIGHT_TZM, BG_END_RIGHT_TZM)
+    x_bg, y_bg = dataSelect(dat, bg_head, bg_end)
 
 bg_mod = PolynomialModel(BG_TYPE, prefix='bg_')   # Background
 pars = bg_mod.guess(y_bg, x=x_bg)
@@ -233,4 +259,3 @@ np.savetxt(
 )
 
 print('Successfully fitted and the report is generated!')
-
