@@ -1,7 +1,7 @@
 [[Model]]
-    ((Model(voigt, prefix='p1_') + Model(voigt, prefix='p2_')) + Model(polynomial, prefix='bg_'))
+    ((Model(polynomial, prefix='bg_') + Model(voigt, prefix='p1_')) + Model(voigt, prefix='p2_'))
 [[Fit Statistics]]
-    # function evals   = 98
+    # function evals   = 129
     # data points      = 600
     # variables        = 9
     chi-square         = 102704.137
@@ -9,21 +9,21 @@
     Akaike info crit   = 3103.607
     Bayesian info crit = 3143.179
 [[Variables]]
-    bg_c0:         -1131.20188 +/- 247.3462 (21.87%) (init=-941.6)
-    bg_c1:          41.0636735 +/- 8.583130 (20.90%) (init= 34.81)
-    bg_c2:         -0.36273279 +/- 0.074063 (20.42%) (init=-0.3106)
-    p1_amplitude:   682.652361 +/- 5.188981 (0.76%) (init= 2000)
-    p1_sigma:       0.23275202 +/- 0.001813 (0.78%) (init= 1)
+    bg_c0:         -1131.16494 +/- 247.3486 (21.87%) (init=-941.5589)
+    bg_c1:          41.0623813 +/- 8.583212 (20.90%) (init= 34.80556)
+    bg_c2:         -0.36272158 +/- 0.074063 (20.42%) (init=-0.3106165)
+    p1_amplitude:   682.653646 +/- 5.189146 (0.76%) (init= 2000)
+    p1_sigma:       0.23275258 +/- 0.001813 (0.78%) (init= 1)
     p1_center:      56.3305646 +/- 0.002087 (0.00%) (init= 56)
-    p1_gamma:       0.23275202 +/- 0.001813 (0.78%)  == 'p1_sigma'
-    p1_fwhm:        0.83821218 +/- 0.006531 (0.78%)  == '3.6013100*p1_sigma'
-    p1_height:      1170.08179 +/- 6.098298 (0.52%)  == '0.3989423*p1_amplitude/max(1.e-15, p1_sigma)'
-    p2_amplitude:   118.326886 +/- 5.450853 (4.61%) (init= 2000)
-    p2_sigma:       0.24015544 +/- 0.011159 (4.65%) (init= 1)
+    p1_gamma:       0.23275258 +/- 0.001813 (0.78%)  == 'p1_sigma'
+    p1_fwhm:        0.83821421 +/- 0.006532 (0.78%)  == '3.6013100*p1_sigma'
+    p1_height:      1170.08115 +/- 6.098454 (0.52%)  == '0.3989423*p1_amplitude/max(1.e-15, p1_sigma)'
+    p2_amplitude:   118.327569 +/- 5.450877 (4.61%) (init= 2000)
+    p2_sigma:       0.24015654 +/- 0.011159 (4.65%) (init= 1)
     p2_center:      59.0809819 +/- 0.012606 (0.02%) (init= 59)
-    p2_gamma:       0.24015544 +/- 0.011159 (4.65%)  == 'p2_sigma'
-    p2_fwhm:        0.86487421 +/- 0.040188 (4.65%)  == '3.6013100*p2_sigma'
-    p2_height:      196.562686 +/- 6.034965 (3.07%)  == '0.3989423*p2_amplitude/max(1.e-15, p2_sigma)'
+    p2_gamma:       0.24015654 +/- 0.011159 (4.65%)  == 'p2_sigma'
+    p2_fwhm:        0.86487817 +/- 0.040187 (4.65%)  == '3.6013100*p2_sigma'
+    p2_height:      196.562921 +/- 6.034886 (3.07%)  == '0.3989423*p2_amplitude/max(1.e-15, p2_sigma)'
 [[Correlations]] (unreported correlations are <  0.500)
     C(bg_c1, bg_c2)              = -1.000 
     C(bg_c0, bg_c1)              = -1.000 
@@ -38,4 +38,5 @@
     C(bg_c0, p1_amplitude)       =  0.595 
 
 ===================
-Area1 = 664.335143795, Area2 = 115.199154904
+Area 0: 664.336349626
+Area 1: 115.199805595
