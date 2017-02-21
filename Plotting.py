@@ -5,7 +5,7 @@ Plotting script
 
 """
 
-__author__ = "LI Kezhi" 
+__author__ = "LI Kezhi"
 __date__ = "$2016-12-13$"
 __version__ = "1.0.0"
 
@@ -55,10 +55,11 @@ for i in xrange(len(name)):
 def plot(data, name):
     fig, ax = plt.subplots()
     for i in xrange(len(name)):
-        ax.bar(data[i][:,6], data[i][:,1],
-               width=0.1, 
+        ax.bar(data[i][:, 6], data[i][:, 1],
+               width=0.1,
                edgecolor=colors[i], facecolor=colors[i],
-               label=labels[i])
+               label=labels[i]
+              )
 
     ax.set_xlim(5, 80)
     ax.set_ylim(0, 100)

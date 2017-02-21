@@ -15,7 +15,7 @@ Steps:
 5. Plotting and reports
 """
 
-__author__ = "LI Kezhi" 
+__author__ = "LI Kezhi"
 __date__ = "$2017-01-24$"
 __version__ = "1.3.1"
 
@@ -91,19 +91,19 @@ def dataSelect(data, start, end):
     if data[0, 0] > data[-1, 0]:
         dataCopy = np.flipud(data)
     x, y = data[:, 0], data[:, 1]
-    
-    if type(start) == float or type(start) == int:
+
+    if isinstance(start, float) or isinstance(start, int):
         assert start < end, 'start should be less than end'
         startLine, endLine = None, None
         for i in xrange(np.size(x)):
-            if startLine == None and x[i] >= start:
+            if startLine is None and x[i] >= start:
                 startLine = i
-            if startLine != None and endLine == None and x[i] >= end:
+            if startLine != None and endLine is None and x[i] >= end:
                 endLine = i
                 break
-        if startLine == None:
+        if startLine is None:
             startLine = 0
-        if endLine == None:
+        if endLine is None:
             endLine = np.size(x_original) - 1
         xSelect = x[startLine:endLine]
         ySelect = y[startLine:endLine]
@@ -114,24 +114,24 @@ def dataSelect(data, start, end):
         assert end[0] < start[1], 'end[0] should be less than start[1]'
         assert len(x) == len(y), 'start should have same numbers of values as end'
         pairs = []
-        for i, item in enumerate(start):
+        for i in xrange(len(start)):
             pairs.append((start[i], end[i]))
-        
+
         xSelect, ySelect = np.array([]), np.array([])
         for pair in pairs:
             startLine, endLine = None, None
             for i in xrange(np.size(x)):
-                if startLine == None and x[i] >= pair[0]:
+                if startLine is None and x[i] >= pair[0]:
                     startLine = i
-                if startLine != None and endLine == None and x[i] >= pair[1]:
+                if startLine != None and endLine is None and x[i] >= pair[1]:
                     endLine = i
                     break
-            if startLine == None:
+            if startLine is None:
                 startLine = 0
-            if endLine == None:
+            if endLine is None:
                 endLine = np.size(x_original) - 1
-            xSelect = np.hstack((xSelect, x[startLine:endLine])) 
-            ySelect = np.hstack((ySelect, y[startLine:endLine])) 
+            xSelect = np.hstack((xSelect, x[startLine:endLine]))
+            ySelect = np.hstack((ySelect, y[startLine:endLine]))
             x = x[endLine:]
             y = y[endLine:]
 
@@ -163,7 +163,7 @@ elif BG_FITTING_MODE == 'z':
 bg_mod = PolynomialModel(BG_TYPE, prefix='bg_')   # Background
 pars = bg_mod.guess(y_bg, x=x_bg)
 
-mod = bg_mod     
+mod = bg_mod
 
 init = mod.eval(pars, x=x_bg)
 plt.plot(x, y, 'b.')
@@ -196,7 +196,7 @@ for i, peak in enumerate(PEAK_NAMES):
 
     pars[peak + 'center'].set(
         peakParameters[peak]['center'][0],
-        min=peakParameters[peak]['center'][1], 
+        min=peakParameters[peak]['center'][1],
         max=peakParameters[peak]['center'][2]
         )
     pars[peak + 'amplitude'].set(
@@ -225,12 +225,12 @@ plt.plot(x, out.best_fit, 'r-')    # Graph result
 comps = out.eval_components(x=x)
 plt.plot(x, comps['bg_'], 'g-')  # Plot the background and the peaks
 for i, peak in enumerate(PEAK_NAMES):
-    plt.plot(x, comps[peak] + comps['bg_'],  'k-')
+    plt.plot(x, comps[peak] + comps['bg_'], 'k-')
 plt.show()
 
 if STATUS == 'Curve fitting':
     print(out.fit_report(min_correl=0.5))    # Parameter result
-    exit()   
+    exit()
 
 
 ##### Text output #####
@@ -243,7 +243,7 @@ comps = out.eval_components(x=x)
 
 for i, peak in enumerate(PEAK_NAMES):
     area = simps(comps[peak], x)  # Integration results
-    result_txt.write('Area ' + str(i) + ': ' + str(area) + '\n')
+    result_txt.write('Area ' + repr(i) + ': ' + repr(area) + '\n')
 
 result_txt.close()
 
@@ -251,7 +251,7 @@ resultFittingData = np.vstack((x, out.best_fit, comps['bg_']))
 headerStr = 'x  Fit  Background'
 for i, peak in enumerate(PEAK_NAMES):
     resultFittingData = np.vstack((resultFittingData, comps[peak]))
-    headerStr += '  peak' + str(i)
+    headerStr += '  peak' + repr(i)
 graphFit = np.transpose(resultFittingData)   # Fitting result
 np.savetxt(
     FILE_LOCATION + 'graph_' + FILE_NAME, graphFit, newline = '\n',

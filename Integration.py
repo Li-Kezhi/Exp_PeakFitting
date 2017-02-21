@@ -15,7 +15,7 @@ Steps:
 3. Integrating and reports
 """
 
-__author__ = "LI Kezhi" 
+__author__ = "LI Kezhi"
 __date__ = "$2016-11-23$"
 __version__ = "1.0"
 
@@ -52,23 +52,23 @@ INT_METHOD = 't'   # 't' for trapozoid integration
 ###########################
 
 ##### Read data #####
-dat = np.loadtxt(fileLocation + fileName, delimiter = ',')
+dat = np.loadtxt(fileLocation + fileName, delimiter=',')
 x_original = dat[:, 0]
 y_original = dat[:, 1]
 
 startLine, endLine = None, None
 for i in xrange(np.size(x_original)):
-    if x_original[i] >= start and startLine == None:
+    if x_original[i] >= start and startLine is None:
         startLine = i
-    if startLine != None and endLine == None and x_original[i] >= end:
+    if startLine != None and endLine is None and x_original[i] >= end:
         endLine = i
         break
 if startLine == endLine:
     starLine = 0
     endLine = np.size(x_original) - 1
-if startLine == None:
+if startLine is None:
     startLine = 0
-if endLine == None:
+if endLine is None:
     endLine = np.size(x_original) - 1
 
 x = x_original[startLine:endLine]
@@ -85,7 +85,7 @@ plt.show() # First glimpse
 if BG_FITTING_MODE == 't':
     startLine, endLine = None, None
     for i in xrange(np.size(x_original)):
-        if x_original[i] >= head0 and startLine == None:
+        if x_original[i] >= head0 and startLine is None:
             startLine = i
         if startLine != None and x_original[i] >= end:
             endLine = i
@@ -95,23 +95,23 @@ elif BG_FITTING_MODE == 'z':
     startLine1, startLine2 = None, None
     endLine1, endLine2 = None, None
     for i in xrange(np.size(x_original)):
-        if x_original[i] >= head1 and startLine1 == None:
+        if x_original[i] >= head1 and startLine1 is None:
             startLine1 = i
-        if startLine1 != None and startLine2 == None and x_original[i] >= head2:
+        if startLine1 != None and startLine2 is None and x_original[i] >= head2:
             startLine2 = i
-        if x_original[i] >= end1 and endLine1 == None:
+        if x_original[i] >= end1 and endLine1 is None:
             endLine1 = i
-        if endLine1 != None and endLine2 == None and x_original[i] >= end2:
+        if endLine1 != None and endLine2 is None and x_original[i] >= end2:
             endLine2 = i
-    x_bg = np.hstack((x_original[startLine1:startLine2], 
-                                x_original[endLine1:endLine2]))
+    x_bg = np.hstack((x_original[startLine1:startLine2],
+                      x_original[endLine1:endLine2]))
     y_bg = np.hstack((y_original[startLine1:startLine2],
-                                y_original[endLine1:endLine2]))
+                      y_original[endLine1:endLine2]))
 
 bg_mod = PolynomialModel(1, prefix='bg_')   # Background
 pars = bg_mod.guess(y_bg, x=x_bg)
 
-mod = bg_mod     
+mod = bg_mod
 
 init = mod.eval(pars, x=x_bg)
 plt.plot(x, y, 'b.')
@@ -136,16 +136,16 @@ elif BG_FITTING_MODE == 'z':
     endInt = end1
 
 # Background subtraction
-comp = out.eval_components(x=x)   
+comp = out.eval_components(x=x)
 out_param = out.params
-y_bg_fit = bg_mod.eval(params = out_param, x = x)
+y_bg_fit = bg_mod.eval(params=out_param, x=x)
 y_bg_remove = y - y_bg_fit
 
 startLine, endLine = None, None
 for i in xrange(np.size(x)):
-    if x[i] >= startInt and startLine == None:
+    if x[i] >= startInt and startLine is None:
         startLine = i
-    if startLine != None and endLine == None and x[i] >= endInt:
+    if startLine != None and endLine is None and x[i] >= endInt:
         endLine = i
 x_int = x_original[startLine:endLine]
 y_int = y_bg_remove[startLine:endLine]
@@ -157,7 +157,7 @@ if INT_METHOD == 't':
     integration = np.trapz(y_int, x_int)
 elif INT_METHOD == 's':
     integration = integrate.simps(y_int, x_int)
-print ('Integration: ' + str(integration))
+print ('Integration: ' + repr(integration))
 
 # Plotting
 plt.plot(x, y, 'b.')
@@ -173,7 +173,7 @@ result_txt = open(fileLocation + 'integration_' + fileName + '.txt', 'w')
 result_txt.write(out.fit_report(min_correl=0.5))
 result_txt.write('\n')
 result_txt.write('===================\n')
-result_txt.write('Integration area = ' + str(integration))
-result_txt.write('Start from: ' + str(startInt))
-result_txt.write('End by: ' + str(endInt))
+result_txt.write('Integration area = ' + repr(integration))
+result_txt.write('Start from: ' + repr(startInt))
+result_txt.write('End by: ' + repr(endInt))
 result_txt.close()
