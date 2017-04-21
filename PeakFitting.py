@@ -16,13 +16,14 @@ Steps:
 """
 
 __author__ = "LI Kezhi"
-__date__ = "$2017-01-24$"
-__version__ = "1.3.1"
+__date__ = "$2017-02-26$"
+__version__ = "1.3.2"
 
 import numpy as np
 from lmfit.models import VoigtModel, PolynomialModel
 import matplotlib.pyplot as plt
 from scipy.integrate import simps
+from __future__ import print_function
 
 FILE_LOCATION = './Examples/PeakFitting/'
 FILE_NAME = 'Mn0-100.txt'

@@ -16,14 +16,15 @@ Steps:
 """
 
 __author__ = "LI Kezhi"
-__date__ = "$2016-11-23$"
-__version__ = "1.0"
+__date__ = "$2017-02-26$"
+__version__ = "1.0.1"
 
 import numpy as np
 from scipy import integrate
 from lmfit.models import VoigtModel, LinearModel, PolynomialModel
 import matplotlib.pyplot as plt
 from scipy.integrate import simps
+from __future__ import print_function
 
 fileLocation = './Examples/Integration/'
 fileName = 'A-MN10.csv'
@@ -157,7 +158,7 @@ if INT_METHOD == 't':
     integration = np.trapz(y_int, x_int)
 elif INT_METHOD == 's':
     integration = integrate.simps(y_int, x_int)
-print ('Integration: ' + repr(integration))
+print('Integration: ' + repr(integration))
 
 # Plotting
 plt.plot(x, y, 'b.')
