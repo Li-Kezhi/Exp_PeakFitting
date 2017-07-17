@@ -15,6 +15,8 @@ Steps:
 5. Plotting and reports
 """
 
+from __future__ import print_function
+
 __author__ = "LI Kezhi"
 __date__ = "$2017-02-26$"
 __version__ = "1.3.2"
@@ -23,11 +25,11 @@ import numpy as np
 from lmfit.models import VoigtModel, PolynomialModel
 import matplotlib.pyplot as plt
 from scipy.integrate import simps
-from __future__ import print_function
+
 
 FILE_LOCATION = './Examples/PeakFitting/'
 FILE_NAME = 'Mn0-100.txt'
-
+ 
 PLOT_HEAD = 52.0      # Define the fitting range
 PLOT_END = 64.0
 
@@ -139,7 +141,7 @@ def dataSelect(data, start, end):
     return (xSelect, ySelect)
 
 ##### Read data #####
-dat = np.loadtxt(FILE_LOCATION + FILE_NAME)
+dat = np.loadtxt(FILE_LOCATION + FILE_NAME）
 x_original = dat[:, 0]
 y_original = dat[:, 1]
 
@@ -248,12 +250,14 @@ for i, peak in enumerate(PEAK_NAMES):
 
 result_txt.close()
 
-resultFittingData = np.vstack((x, out.best_fit, comps['bg_']))
-headerStr = 'x  Fit  Background'
+resultFittingData = np.vstack((x, out.data, out.best_fit, comps['bg_'])) # Fitting result
+headerStr = 'x  OriginalData  Fit  Background'
 for i, peak in enumerate(PEAK_NAMES):
     resultFittingData = np.vstack((resultFittingData, comps[peak]))
     headerStr += '  peak' + repr(i)
-graphFit = np.transpose(resultFittingData)   # Fitting result
+
+graphFit = np.transpose(resultFittingData)
+
 np.savetxt(
     FILE_LOCATION + 'graph_' + FILE_NAME, graphFit, newline = '\n',
     header=headerStr
