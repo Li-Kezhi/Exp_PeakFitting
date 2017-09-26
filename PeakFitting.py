@@ -29,7 +29,7 @@ from scipy.integrate import simps
 
 FILE_LOCATION = './Examples/PeakFitting/'
 FILE_NAME = 'Mn0-100.txt'
- 
+
 PLOT_HEAD = 52.0      # Define the fitting range
 PLOT_END = 64.0
 
@@ -92,7 +92,7 @@ def dataSelect(data, start, end):
     return: tuple of (x, y)
     '''
     if data[0, 0] > data[-1, 0]:
-        dataCopy = np.flipud(data)
+        data = np.flipud(data)
     x, y = data[:, 0], data[:, 1]
 
     if isinstance(start, float) or isinstance(start, int):
@@ -141,7 +141,7 @@ def dataSelect(data, start, end):
     return (xSelect, ySelect)
 
 ##### Read data #####
-dat = np.loadtxt(FILE_LOCATION + FILE_NAME）
+dat = np.loadtxt(FILE_LOCATION + FILE_NAME)
 x_original = dat[:, 0]
 y_original = dat[:, 1]
 
@@ -259,7 +259,7 @@ for i, peak in enumerate(PEAK_NAMES):
 graphFit = np.transpose(resultFittingData)
 
 np.savetxt(
-    FILE_LOCATION + 'graph_' + FILE_NAME, graphFit, newline = '\n',
+    FILE_LOCATION + 'graph_' + FILE_NAME, graphFit, newline='\n',
     header=headerStr
 )
 
