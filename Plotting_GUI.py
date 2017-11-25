@@ -154,8 +154,8 @@ def plot_data():
     # canvas._tkcanvas.pack(side=Tk.TOP, fill=Tk.BOTH, expand=1)
     figWindowNew.wm_attributes('-topmost', 1)  # Activate the plotting window
 
-buttonReadData = Tk.Button(root, text='Plot', command=plot_data)
-buttonReadData.pack(side=Tk.LEFT)
+buttonReadData = Tk.Button(plotLabelFrame, text='Plot', command=plot_data)
+buttonReadData.pack(side=Tk.TOP)
 
 
 
@@ -176,7 +176,7 @@ def _quit():
 
 
 button = Tk.Button(root, text='Quit', command=_quit)
-button.pack(side=Tk.LEFT)
+button.pack(side=Tk.TOP)
 
 Tk.mainloop()
 # If you put root.destroy() here, it will cause an error if
