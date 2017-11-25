@@ -152,7 +152,7 @@ def plot_data():
     canvasNew.show()
     toolbarNew.update()
     # canvas._tkcanvas.pack(side=Tk.TOP, fill=Tk.BOTH, expand=1)
-    figWindowNew.wm_attributes('-topmost', 1)  # Activate the plotting window
+    figWindowNew.wm_attributes('-topmost')  # Activate the plotting window
 
 buttonReadData = Tk.Button(plotLabelFrame, text='Plot', command=plot_data)
 buttonReadData.pack(side=Tk.TOP)
