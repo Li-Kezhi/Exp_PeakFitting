@@ -5,10 +5,10 @@ Basic tools for scientific research.
 ### PeakFitting.py
 Used for fitting multi-peaks in a spectrum.
 
-### Integration.py
+### Integration.py and Integration_GUI.py
 Used for integrate peak area for a spectrum.
 
-### Plotting.py or Plotting_GUI.py
+### Plotting.py and Plotting_GUI.py
 Used for plotting.
 
 ### Converter.py
