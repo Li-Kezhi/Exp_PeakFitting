@@ -192,11 +192,6 @@ Tk.Label(rangeEndFrame, text=' to ').pack(side=Tk.LEFT)
 vEndRightX = Tk.DoubleVar(root)
 entryEndRightX = Tk.Entry(rangeEndFrame, textvariable=vEndRightX, width=6)
 entryEndRightX.pack(side=Tk.LEFT)
-##### DEBUG #####
-vStartLeftX.set(300)
-vStartRightX.set(320)
-vEndLeftX.set(700)
-vEndRightX.set(720)
 
 # Parameter: background form
 bgFormFrame = Tk.Frame(bgLabelFrame)
