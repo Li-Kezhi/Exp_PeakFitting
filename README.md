@@ -8,7 +8,7 @@ Used for fitting multi-peaks in a spectrum.
 ### Integration.py
 Used for integrate peak area for a spectrum.
 
-### Plotting.py
+### Plotting.py or Plotting_GUI.py
 Used for plotting.
 
 ### Converter.py
