@@ -5,7 +5,10 @@ Basic tools for scientific research.
 * PeakFitting.py and Fitting_GUI.py
 
     Used for fitting multi-peaks in a spectrum.
-![Screenshot](./Examples/PeakFitting/Screenshot.png "Screenshot for Fitting_GUI.py")
+
+    Instant download (without installing any dependent packages): [For Mac](./Packages/PeakFitting_GUI_mac.zip) or [For Windows](./Packages/PeakFitting_GUI_Windows.zip)
+
+![Screenshot](./Examples/PeakFitting/Screenshot.jpg "Screenshot for Fitting_GUI.py")
 
 * Integration.py and Integration_GUI.py
 
