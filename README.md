@@ -2,20 +2,26 @@
 Basic tools for scientific research.
 
 ## Scripts
-### PeakFitting.py
-Used for fitting multi-peaks in a spectrum.
+* PeakFitting.py and Fitting_GUI.py
 
-### Integration.py and Integration_GUI.py
-Used for integrate peak area for a spectrum.
+    Used for fitting multi-peaks in a spectrum.
+![Screenshot](./Examples/PeakFitting/Screenshot.png "Screenshot for Fitting_GUI.py")
 
-### Plotting.py and Plotting_GUI.py
-Used for plotting.
+* Integration.py and Integration_GUI.py
 
-### Converter.py
-Used for convert flowmeter data.
+    Used for integrate peak area for a spectrum.
 
-### LatexCompile.sh
-Used for compile .tex files. (Only tested in Mac.)
+* Plotting.py and Plotting_GUI.py
+
+    Used for plotting.
+
+* Converter.py
+
+    Used for convert flowmeter data.
+
+* LatexCompile.sh
+
+    Used for compile .tex files. (Only tested in Mac.)
 
 ## Dependencies
 - lmfit package (PeakFitting/Integration)

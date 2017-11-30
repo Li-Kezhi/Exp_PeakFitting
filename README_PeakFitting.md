@@ -11,3 +11,6 @@ Using Python LMFIT to fit peaks
 4. Define peaks information and make initial estimation
 
 5. Fit peaks
+
+# PeakFitting_GUI.py
+A version with GUI

@@ -1,0 +1,36 @@
+[[Model]]
+    (((Model(polynomial, prefix='bg_') + Model(voigt, prefix='Peak_0')) + Model(voigt, prefix='Peak_1')) + Model(voigt, prefix='Peak_2'))
+[[Variables]]
+    bg_c0:            -163.645308 +/- 19.77253 (12.08%) (init= 31.98614)
+    bg_c1:             7.62199339 +/- 0.766935 (10.06%) (init=-0.2779762)
+    bg_c2:            -0.07522848 +/- 0.007267 (9.66%) (init= 0.0006841681)
+    Peak_0amplitude:   885.355525 +/- 3.814759 (0.43%) (init= 577.1609)
+    Peak_0sigma:       0.22358075 +/- 0.001163 (0.52%) (init= 0.2412173)
+    Peak_0center:      47.4754128 +/- 0.001510 (0.00%) (init= 46.99878)
+    Peak_0gamma:       0.22358075 +/- 0.001163 (0.52%)  == 'Peak_0sigma'
+    Peak_0fwhm:        0.80518359 +/- 0.004190 (0.52%)  == '3.6013100*Peak_0sigma'
+    Peak_0height:      1579.76823 +/- 6.000091 (0.38%)  == '0.3989423*Peak_0amplitude/max(1.e-15, Peak_0sigma)'
+    Peak_1amplitude:   689.934301 +/- 3.960131 (0.57%) (init= 904.3859)
+    Peak_1sigma:       0.23442129 +/- 0.001610 (0.69%) (init= 0.2857756)
+    Peak_1center:      56.3313577 +/- 0.002083 (0.00%) (init= 56.32621)
+    Peak_1gamma:       0.23442129 +/- 0.001610 (0.69%)  == 'Peak_1sigma'
+    Peak_1fwhm:        0.84422374 +/- 0.005800 (0.69%)  == '3.6013100*Peak_1sigma'
+    Peak_1height:      1174.14239 +/- 5.874539 (0.50%)  == '0.3989423*Peak_1amplitude/max(1.e-15, Peak_1sigma)'
+    Peak_2amplitude:   129.906962 +/- 4.122407 (3.17%) (init= 320.1222)
+    Peak_2sigma:       0.25680249 +/- 0.009786 (3.81%) (init= 0.5040188)
+    Peak_2center:      59.0791226 +/- 0.012691 (0.02%) (init= 58.90417)
+    Peak_2gamma:       0.25680249 +/- 0.009786 (3.81%)  == 'Peak_2sigma'
+    Peak_2fwhm:        0.92482539 +/- 0.035245 (3.81%)  == '3.6013100*Peak_2sigma'
+    Peak_2height:      201.810274 +/- 5.612535 (2.78%)  == '0.3989423*Peak_2amplitude/max(1.e-15, Peak_2sigma)'
+[[Correlations]] (unreported correlations are <  0.500)
+    C(bg_c1, bg_c2)              = -0.998 
+    C(bg_c0, bg_c1)              = -0.998 
+    C(bg_c0, bg_c2)              =  0.991 
+    C(Peak_1amplitude, Peak_1sigma)  =  0.699 
+    C(Peak_2amplitude, Peak_2sigma)  =  0.697 
+    C(Peak_0amplitude, Peak_0sigma)  =  0.696 
+
+===================
+Area 0: 874.51237332837673
+Area 1: 681.62571989540731
+Area 2: 127.83784136153473
