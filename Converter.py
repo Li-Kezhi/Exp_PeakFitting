@@ -6,8 +6,8 @@ Flowmeter converter program
 """
 
 __author__ = "LI Kezhi"
-__date__ = "$2017-04-21$"
-__version__ = "1.0.0"
+__date__ = "$2017-12-02$"
+__version__ = "1.0.1"
 
 import Tkinter as tk
 
@@ -77,10 +77,10 @@ def calc():
     in2 = float(leftv2.get())
     in3 = float(leftv3.get())
     in4 = float(leftv4.get())
-    out1 = (in1 - 0.045157833) / 0.340792979
-    out2 = (in2 - 2.880092788) / 1.134078838
-    out3 = (in3 - 6.019912319) / 1.0796296
-    out4 = (in4 + 27.35846216) / 2.238492897
+    out1 = (in1 + 0.3369) / 0.1901
+    out2 = (in2 - 8.4871) / 0.6239
+    out3 = (in3 - 5.3294) / 1.0147
+    out4 = (in4 + 27.145) / 2.1568
     out1 = '%.1f' % out1
     out2 = '%.1f' % out2
     out3 = '%.1f' % out3
@@ -94,10 +94,10 @@ def calc():
     in2 = float(rightv2.get())
     in3 = float(rightv3.get())
     in4 = float(rightv4.get())
-    out1 = in1 * 0.340792979 + 0.045157833
-    out2 = in2 * 1.134078838 + 2.880092788
-    out3 = in3 * 1.0796296 + 6.019912319
-    out4 = in4 * 2.238492897 - 27.35846216
+    out1 = in1 * 0.1901 - 0.3369
+    out2 = in2 * 0.6239 + 8.4871
+    out3 = in3 * 1.0147 + 5.3294
+    out4 = in4 * 2.1568 - 27.145
     out1 = '%.1f' % out1
     out2 = '%.1f' % out2
     out3 = '%.1f' % out3
