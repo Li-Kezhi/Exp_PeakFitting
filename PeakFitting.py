@@ -98,7 +98,7 @@ def dataSelect(data, start, end):
     if isinstance(start, float) or isinstance(start, int):
         assert start < end, 'start should be less than end'
         startLine, endLine = None, None
-        for i in xrange(np.size(x)):
+        for i in range(np.size(x)):
             if startLine is None and x[i] >= start:
                 startLine = i
             if startLine != None and endLine is None and x[i] >= end:
@@ -117,7 +117,7 @@ def dataSelect(data, start, end):
         assert end[0] < start[1], 'end[0] should be less than start[1]'
         assert len(x) == len(y), 'start should have same numbers of values as end'
         pairs = []
-        for i in xrange(len(start)):
+        for i in range(len(start)):
             pairs.append((start[i], end[i]))
 
         xSelect, ySelect = np.array([]), np.array([])
