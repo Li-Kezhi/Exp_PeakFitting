@@ -123,7 +123,7 @@ def dataSelect(data, start, end):
         xSelect, ySelect = np.array([]), np.array([])
         for pair in pairs:
             startLine, endLine = None, None
-            for i in xrange(np.size(x)):
+            for i in range(np.size(x)):
                 if startLine is None and x[i] >= pair[0]:
                     startLine = i
                 if startLine != None and endLine is None and x[i] >= pair[1]:
