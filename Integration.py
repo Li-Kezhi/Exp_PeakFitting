@@ -148,10 +148,10 @@ for i in xrange(np.size(x)):
         startLine = i
     if startLine != None and endLine is None and x[i] >= endInt:
         endLine = i
-x_int = x_original[startLine:endLine]
+x_int = x[startLine:endLine]
 y_int = y_bg_remove[startLine:endLine]
 y_bg_fit_ = y_bg_fit[startLine:endLine]
-y_orig = y_original[startLine:endLine]
+y_orig = y[startLine:endLine]
 
 
 if INT_METHOD == 't':
